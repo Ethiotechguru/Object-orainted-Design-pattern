@@ -135,6 +135,11 @@ let specsOfTShirt = {
 selectColorElement.addEventListener("input", (e) => {
 	// console.log(e.target.value);
     specsOfTShirt.color=e.target.value;
+    let image = document.querySelector('.image');
+    if(e.target.value){
+        image.style.backgroundColor = e.target.value;
+        document.querySelector('.color').textContent = `Color: ${e.target.value}`
+    }
     if(specsOfTShirt.color && specsOfTShirt.size){
         console.log(specsOfTShirt);
         filterBySpecs(
@@ -152,17 +157,22 @@ selectSizeElement.addEventListener("input", (e) => {
         console.log("you must chose size");
         return;
     }
+    if (e.target.value) {
+		document.querySelector(
+			".size"
+		).textContent = `Size: ${e.target.value}`;
+	}
     specsOfTShirt.size = e.target.value;
-     if (specsOfTShirt.color && specsOfTShirt.size) {
-         console.log(specsOfTShirt);
-			filterBySpecs(
-				pr,
-				new AndFilter(
-					new ColorSpecification(specsOfTShirt.color),
-					new SizeSpecification(specsOfTShirt.size)
-				)
-			);
-		}
+    if (specsOfTShirt.color && specsOfTShirt.size) {
+        console.log(specsOfTShirt);
+        filterBySpecs(
+            pr,
+            new AndFilter(
+                new ColorSpecification(specsOfTShirt.color),
+                new SizeSpecification(specsOfTShirt.size)
+            )
+        );
+	}
 });
 
 
