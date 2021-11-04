@@ -1,4 +1,5 @@
-// const fs = require('fs');
+const fs = require('fs');
+require("dotenv").config();
 //Single Responsibility
 class Journal
 {
@@ -31,12 +32,11 @@ journal.addEntry('I lough today!');
 journal.addEntry('I eat Orange!');
 journal.addEntry('I went to grocery')
 
+let fileName = process.env.FILE_NAME;
 
-let fileName =
-	"/Users/samuelbelete/Desktop/JSCLASS/assets/OOP/DesignPatternsJs/index.txt";
 
-// let p = new PersistentManger();
-// p.save(journal, fileName);
+let p = new PersistentManger();
+p.save(journal, fileName);
 
 //Open-Closed Principle => states that objects are open for extension but closed for modification
 const Color = Object.freeze({
