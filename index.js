@@ -1,5 +1,5 @@
-const fs = require('fs');
-require("dotenv").config();
+// require("dotenv").config();
+// const fs = require('fs');
 //Single Responsibility
 class Journal
 {
@@ -32,11 +32,11 @@ journal.addEntry('I lough today!');
 journal.addEntry('I eat Orange!');
 journal.addEntry('I went to grocery')
 
-let fileName = process.env.FILE_NAME;
+// let fileName = process.env.FILE_NAME;
 
 
-let p = new PersistentManger();
-p.save(journal, fileName);
+// let p = new PersistentManger();
+// p.save(journal, fileName);
 
 //Open-Closed Principle => states that objects are open for extension but closed for modification
 const Color = Object.freeze({
@@ -72,7 +72,7 @@ class Product {
 //     }
 // }
 class ColorSpecification {
-	constructor(color) {
+	constructor(color){
 		this.color = color;
 	}
 	isSatisfied(item){
@@ -118,22 +118,66 @@ class AndFilter{
 }
 const bf = new BetterFilter();
 
-
-
-let specsColorSizePrice = new AndFilter(new ColorSpecification(Color.green), new SizeSpecification(Size.large),new PriceSpecification(10))
 function filterBySpecs(products, specifications) {
-    for (let p of bf.filter(products, specifications)) {
-		console.log(p.name );
+	for (let p of bf.filter(products, specifications)) {
+		console.log(p.name);
 	}
 }
-filterBySpecs(pr, specsColorSizePrice);
-
-const specsPrice = new AndFilter(new ColorSpecification(Color.blue))
-console.log("***************")
-filterBySpecs(pr, specsPrice);
-
-console.log("***************");
-filterBySpecs(pr, new SizeSpecification(Size.small));
 
 
 
+
+const selectColorElement = document.querySelector(".selectColor");
+const selectSizeElement = document.querySelector('.selectSize');
+let specsOfTShirt = {
+    
+}
+selectColorElement.addEventListener("input", (e) => {
+	// console.log(e.target.value);
+    specsOfTShirt.color=e.target.value;
+    if(specsOfTShirt.color && specsOfTShirt.size){
+        console.log(specsOfTShirt);
+        filterBySpecs(
+			pr,
+			new AndFilter(
+				new ColorSpecification(specsOfTShirt.color),
+				new SizeSpecification(specsOfTShirt.size)
+			)
+		);
+
+    }
+});
+selectSizeElement.addEventListener("input", (e) => {
+	if(!e.target.value){
+        console.log("you must chose size");
+        return;
+    }
+    specsOfTShirt.size = e.target.value;
+     if (specsOfTShirt.color && specsOfTShirt.size) {
+         console.log(specsOfTShirt);
+			filterBySpecs(
+				pr,
+				new AndFilter(
+					new ColorSpecification(specsOfTShirt.color),
+					new SizeSpecification(specsOfTShirt.size)
+				)
+			);
+		}
+});
+
+
+// let specsColorSizePrice = new AndFilter(
+// 	new ColorSpecification(Color.green),
+// 	new SizeSpecification(Size.large),
+// 	new PriceSpecification(10)
+// );
+
+// filterBySpecs(pr, specsColorSizePrice);
+
+// const specsPrice = new AndFilter(new ColorSpecification(specsOfTShirt.color));
+// console.log("***************");
+// filterBySpecs(pr, specsPrice);
+
+// console.log("***************");
+// filterBySpecs(pr, new SizeSpecification(specsOfTShirt.size));
+// console.log(specsColorSizePrice);
